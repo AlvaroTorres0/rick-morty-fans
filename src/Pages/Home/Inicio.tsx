@@ -7,7 +7,10 @@ const Inicio: React.FC = () => {
 
   return (
         <section className='flex flex-col gap-8'>
-          <h2 className='font-principal-black primary-text-color text-4xl'>Todos los personajes</h2>
+          <div>
+            <h2 className='font-principal-black primary-text-color text-5xl'>Todos los personajes</h2>
+            <p className='font-principal-light text-lg'>Selecciona tus favoritos</p>
+          </div>
           <div className="carousel w-full flex">
             <div id={'slide1'} className="carousel-item relative">
                 {
@@ -21,7 +24,7 @@ const Inicio: React.FC = () => {
                             image={characters[currentCharacter].image}
                             origin={characters[currentCharacter].origin}
                           />
-                          <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
+                          <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/4 lg:top-2/4">
                             <button onClick={() => handlePrevCharacter()} className="btn btn-circle">❮</button>
                             <button onClick={() => handleNextCharacter()}className="btn btn-circle">❯</button>
                           </div>
