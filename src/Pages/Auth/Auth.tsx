@@ -1,9 +1,14 @@
 import React from 'react'
+import AuthForm from './AuthForm'
 
-export const Auth: React.FC = () => {
+interface AuthProps {
+  formType: 'login' | 'signup';
+}
+
+export const Auth: React.FC<AuthProps> = ({ formType }) => {
   return (
-        <section>
-            <h2>Auth</h2>
+        <section className='bg-auth-page bg-cover bg-center h-screen flex justify-center items-center'>
+            <AuthForm formType={formType}></AuthForm>
         </section>
   )
 }
