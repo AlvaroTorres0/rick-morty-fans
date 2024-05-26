@@ -1,8 +1,10 @@
 import './App.css'
+import React from 'react'
+import RountingHandler from './RoutingHandler'
 
-function App () {
+const App: React.FC = () => {
   return (
-    <h1>Hello world</h1>
+    <RountingHandler></RountingHandler>
   )
 }
 
