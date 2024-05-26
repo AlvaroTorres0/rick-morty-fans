@@ -1,3 +1,40 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.bg-auth-page {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../public/auth-hero.jpg');
+}
+
+@font-face {
+    font-family: "font-principal-bold";
+    src: url("../public/fonts/sf-ui-display-bold.otf");
+  }
+  @font-face {
+    font-family: "font-principal-black";
+    src: url("../public/fonts/sf-ui-display-black.otf");
+  }
+  @font-face {
+    font-family: "font-principal-heavy";
+    src: url("../public/fonts/sf-ui-display-heavy.otf");
+  }
+  @font-face {
+    font-family: "font-principal-light";
+    src: url("../public/fonts/sf-ui-display-light.otf");
+  }
+  @font-face {
+    font-family: "font-principal-medium";
+    src: url("../public/fonts/sf-ui-display-medium.otf");
+  }
+  @font-face {
+    font-family: "font-principal-semibold";
+    src: url("../public/fonts/sf-ui-display-semibold.otf");
+  }
+  @font-face {
+    font-family: "font-principal-thin";
+    src: url("../public/fonts/sf-ui-display-thin.otf");
+  }
+  @font-face {
+    font-family: "font-principal-ultralight";
+    src: url("../public/fonts/sf-ui-display-ultralight.otf");
+  }

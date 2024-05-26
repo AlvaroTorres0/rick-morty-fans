@@ -5,7 +5,18 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        "principal-bold": ["font-principal-bold"],
+        "principal-medium": ["font-principal-medium"],
+        "principal-black": ["font-principal-black"],
+        "principal-heavy": ["font-principal-heavy"],
+        "principal-light": ["font-principal-light"],
+        "principal-semibold": ["font-principal-semibold"],
+        "principal-thin": ["font-principal-thin"],
+        "principal-ultralight": ["font-principal-ultralight"],
+      },
+    },
   },
   plugins: [
     require('daisyui'),
