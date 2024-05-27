@@ -1,7 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { useAuth } from '../context/AuthContext'
 
 const NavBar: React.FC = () => {
+  const { signOut } = useAuth()
   return (
     <nav className="navbar bg-base-100 fixed">
         <div className="navbar-start">
@@ -25,7 +27,7 @@ const NavBar: React.FC = () => {
             </ul>
         </div>
         <div className="navbar-end">
-            <a className="btn">Cerrar sesión</a>
+            <button onClick={ () => signOut() } className="btn">Cerrar sesión</button>
         </div>
     </nav>
   )
