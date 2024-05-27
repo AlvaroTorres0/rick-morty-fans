@@ -4,6 +4,7 @@ import * as Yup from 'yup'
 import { Link } from 'react-router-dom'
 import { InputField } from '../../common/FormComponents'
 import { useAuth } from '../../context/AuthContext'
+import { toast } from 'sonner'
 import { userIsRegistered } from '../../supabase/supabase.actions'
 
 interface AuthProps {
@@ -11,7 +12,7 @@ interface AuthProps {
 }
 
 const AuthForm: React.FC<AuthProps> = ({ formType }) => {
-  const { signInWithOtp } = useAuth()
+  const { signInWithOtp, signUp } = useAuth()
   return (
     <div className='bg-[#1C1C1CBB] w-4/5 md:w-3/4 lg:w-[600px] rounded-lg px-14 py-16 flex flex-col gap-10'>
       <div>
@@ -48,8 +49,10 @@ const AuthForm: React.FC<AuthProps> = ({ formType }) => {
                 if (isUserRegistered) {
                   if (formType === 'login') {
                     await signInWithOtp(values.email)
+                    toast.success('Código de verificación enviado')
                   } else {
-                    // await registerUser(values.email, values.password)
+                    await signUp(values.email, values.password)
+                    toast.success('Código de verificación enviado')
                   }
                 }
               } catch (error) {
@@ -89,12 +92,12 @@ const AuthForm: React.FC<AuthProps> = ({ formType }) => {
                     {
                       formType === 'login'
                         ? (
-                        <Link to="/signup" className="text-primary-color-300">
+                        <Link to="/registro" className="text-primary-color-300">
                           Regístrate
                         </Link>
                           )
                         : (
-                        <Link to="/login" className="text-primary-color-300">
+                        <Link to="/iniciar-sesion" className="text-primary-color-300">
                           Inicia sesión
                         </Link>
                           )

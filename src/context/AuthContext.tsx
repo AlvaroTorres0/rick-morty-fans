@@ -1,11 +1,14 @@
 import { createContext, useContext, useState, ReactNode, FC, useEffect } from 'react'
 import { supabase } from '../supabase/supabase.config'
+import { User } from '@supabase/supabase-js'
 import { useNavigate } from 'react-router-dom'
+import { SupabaseUser } from '../d'
 
 interface AuthContextType {
-  user: any;
+  user: SupabaseUser;
   signInWithOtp: (email: string) => Promise<void>;
   signOut: () => Promise<void>;
+  signUp: (email: string, password: string) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
@@ -16,23 +19,52 @@ interface AuthContextProviderProps {
 
 export const AuthContextProvider: FC<AuthContextProviderProps> = ({ children }) => {
   const navigate = useNavigate()
-  const [user, setUser] = useState<any>(null)
+  const [user, setUser] = useState<User | undefined>()
 
   async function signInWithOtp (email: string) {
     try {
       const { data, error } = await supabase.auth.signInWithOtp({
         email,
         options: {
-          emailRedirectTo: 'https://example.com/welcome'
+          emailRedirectTo: 'https://rick-morty-fans.netlify.app/'
         }
       })
 
       if (error) {
         throw Error
       }
-      setUser(data)
+      setUser(data.user ? data.user : undefined)
     } catch (error) {
       throw new Error('Error al enviar el OTP')
+    }
+  }
+
+  async function signUp (email: string, password: string) {
+    try {
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password
+      })
+
+      if (error) {
+        throw Error
+      }
+
+      const { data: userData, error: userError } = await supabase
+        .from('users')
+        .insert({ email, password })
+
+      if (userError) {
+        throw Error
+      }
+
+      if (userData) {
+        console.log('Usuario registrado')
+      }
+
+      setUser(data.user ? data.user : undefined)
+    } catch (error) {
+      throw new Error('Error al registrar usuario')
     }
   }
 
@@ -48,6 +80,7 @@ export const AuthContextProvider: FC<AuthContextProviderProps> = ({ children }) 
   }
 
   useEffect(() => {
+    // @ts-expect-error event is not a property valid for the onAuthStateChange method
     const { data: authListener } = supabase.auth.onAuthStateChange(async (event, session) => {
       if (session == null) {
         navigate('/iniciar-sesion', { replace: true })
@@ -63,7 +96,8 @@ export const AuthContextProvider: FC<AuthContextProviderProps> = ({ children }) 
   }, [])
 
   return (
-    <AuthContext.Provider value={{ user, signInWithOtp, signOut }}>
+    // @ts-expect-error value is not a property valid for the AuthContextProvider component
+    <AuthContext.Provider value={{ user, signInWithOtp, signOut, signUp }}>
       {children}
     </AuthContext.Provider>
   )

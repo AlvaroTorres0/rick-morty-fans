@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { getFavorites } from '../service/APIService'
-import { APIResponse, Character } from '../d'
+import { Character } from '../d'
 
 export function useFavoritesCharacters () {
   const [favoriteCharacters, setFavoriteCharacters] = useState<Character[]>([])
@@ -11,9 +11,8 @@ export function useFavoritesCharacters () {
   async function getFavoriteCharacters (stringElements: string) {
     try {
       setLoading(true)
-      const data: APIResponse = await getFavorites({ favoritesList: stringElements, type: 'character' })
-      setFavoriteCharacters(data as Character[])
-      console.log(data)
+      const data: Character[] = await getFavorites({ favoritesList: stringElements, type: 'character' })
+      setFavoriteCharacters(data)
       setLoading(false)
     } catch (error) {
       setError(true)

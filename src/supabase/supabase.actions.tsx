@@ -34,6 +34,9 @@ export async function addCharacterToFavorites (userEmail: string, locationId: nu
     if (fetchError) {
       throw Error
     }
+    if (existingData) {
+      throw Error
+    }
   } catch (error) {
     throw new Error('Error al agregar el personaje a favoritos')
   }
@@ -85,6 +88,9 @@ export async function addLocationToFavorites (userEmail: string, locationId: num
       .from('favorites_locations')
       .insert({ email: userEmail, location_id: locationId })
     if (fetchError) {
+      throw Error
+    }
+    if (existingData) {
       throw Error
     }
   } catch (error) {

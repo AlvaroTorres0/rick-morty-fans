@@ -1,6 +1,8 @@
 import { useField } from 'formik'
 
+// @ts-expect-error label is not necesary
 export function InputField ({ label, ...props }) {
+  // @ts-expect-error props are not necesary
   const [field, meta] = useField(props)
   const icon =
     'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjgiIGhlaWdodD0iMTI4IiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxwYXRoIGZpbGw9IiNmZmZmZmYiIGQ9Ik0xMiA5YTMgMyAwIDAgMC0zIDNhMyAzIDAgMCAwIDMgM2EzIDMgMCAwIDAgMy0zYTMgMyAwIDAgMC0zLTNtMCA4YTUgNSAwIDAgMS01LTVhNSA1IDAgMCAxIDUtNWE1IDUgMCAwIDEgNSA1YTUgNSAwIDAgMS01IDVtMC0xMi41QzcgNC41IDIuNzMgNy42MSAxIDEyYzEuNzMgNC4zOSA2IDcuNSAxMSA3LjVzOS4yNy0zLjExIDExLTcuNWMtMS43My00LjM5LTYtNy41LTExLTcuNSIvPjwvc3ZnPg=='
