@@ -30,7 +30,7 @@ export const AuthContextProvider: FC<AuthContextProviderProps> = ({ children }) 
       if (error) {
         throw Error
       }
-      setUser(data) // assuming data contains user info
+      setUser(data)
     } catch (error) {
       throw new Error('Error al enviar el OTP')
     }
@@ -49,14 +49,17 @@ export const AuthContextProvider: FC<AuthContextProviderProps> = ({ children }) 
 
   useEffect(() => {
     const { data: authListener } = supabase.auth.onAuthStateChange(async (event, session) => {
-      console.log('event', event)
-
       if (session == null) {
         navigate('/iniciar-sesion', { replace: true })
       } else {
         navigate('/', { replace: true })
+        setUser(session.user)
       }
     })
+
+    return () => {
+      authListener.subscription.unsubscribe()
+    }
   }, [])
 
   return (
