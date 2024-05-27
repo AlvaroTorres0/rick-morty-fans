@@ -4,6 +4,7 @@ import { Auth } from './Pages/Auth/Auth'
 import LayoutHome from './Pages/Home/Layout'
 import Inicio from './Pages/Home/Inicio'
 import Ubicaciones from './Pages/Home/Ubicaciones'
+import Favoritos from './Pages/Home/Favoritos'
 
 const RountingHandler: React.FC = () => {
   return (
@@ -13,7 +14,7 @@ const RountingHandler: React.FC = () => {
             <Route path="/" element={<LayoutHome />}>
               <Route index element={<Inicio />} />
               <Route path="ubicaciones" element={<Ubicaciones />} />
-              <Route path="favoritos" />
+              <Route path="favoritos" element={<Favoritos />} />
             </Route>
         </Routes>
   )
