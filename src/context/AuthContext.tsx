@@ -1,5 +1,6 @@
-import { createContext, useContext, useState, ReactNode, FC } from 'react'
+import { createContext, useContext, useState, ReactNode, FC, useEffect } from 'react'
 import { supabase } from '../supabase/supabase.config'
+import { useNavigate } from 'react-router-dom'
 
 interface AuthContextType {
   user: any;
@@ -14,6 +15,7 @@ interface AuthContextProviderProps {
 }
 
 export const AuthContextProvider: FC<AuthContextProviderProps> = ({ children }) => {
+  const navigate = useNavigate()
   const [user, setUser] = useState<any>(null)
 
   async function signInWithOtp (email: string) {
@@ -44,6 +46,18 @@ export const AuthContextProvider: FC<AuthContextProviderProps> = ({ children }) 
       throw new Error('Error al cerrar sesión')
     }
   }
+
+  useEffect(() => {
+    const { data: authListener } = supabase.auth.onAuthStateChange(async (event, session) => {
+      console.log('event', event)
+
+      if (session == null) {
+        navigate('/iniciar-sesion', { replace: true })
+      } else {
+        navigate('/', { replace: true })
+      }
+    })
+  }, [])
 
   return (
     <AuthContext.Provider value={{ user, signInWithOtp, signOut }}>

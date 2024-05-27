@@ -3,12 +3,15 @@ import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
 import { Link } from 'react-router-dom'
 import { InputField } from '../../common/FormComponents'
+import { useAuth } from '../../context/AuthContext'
+import { userIsRegistered } from '../../supabase/supabase.actions'
 
 interface AuthProps {
   formType: 'login' | 'signup';
 }
 
 const AuthForm: React.FC<AuthProps> = ({ formType }) => {
+  const { signInWithOtp } = useAuth()
   return (
     <div className='bg-[#1C1C1CBB] w-4/5 md:w-3/4 lg:w-[600px] rounded-lg px-14 py-16 flex flex-col gap-10'>
       <div>
@@ -34,15 +37,26 @@ const AuthForm: React.FC<AuthProps> = ({ formType }) => {
                 .email('Direccion de correo no válida')
                 .required('Debes ingresar un correo electrónico'),
               password: Yup.string()
-                .min(20, 'La contraseña debe tener como mínimo 8 caracteres')
+                .min(8, 'La contraseña debe tener como mínimo 8 caracteres')
                 .max(40, 'La contraseña no puede tener más de 40 caracteres')
                 .required('Debes ingresar una contraseña')
             })}
-            onSubmit={(values, { setSubmitting }) => {
-              setTimeout(() => {
-                alert(JSON.stringify(values, null, 2))
+            onSubmit={async (values, { setSubmitting }) => {
+              try {
+                const isUserRegistered = await userIsRegistered(values.email)
+                console.log(isUserRegistered)
+                if (isUserRegistered) {
+                  if (formType === 'login') {
+                    await signInWithOtp(values.email)
+                  } else {
+                    // await registerUser(values.email, values.password)
+                  }
+                }
+              } catch (error) {
+                console.error('Error verificando si el usuario está registrado:', error)
+              } finally {
                 setSubmitting(false)
-              }, 400)
+              }
             }}
           >
             <Form className="flex flex-col gap-4">
